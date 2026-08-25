@@ -1,44 +1,52 @@
-<!-- PORTFOLIO PROJECT PROFILE: maintained by the repository owner -->
+# Sky Assessment Core
 
-## Project profile and code-audit snapshot
+A deterministic TypeScript assessment-scoring library for educational integrations in the SKYCOIN4444 portfolio.
 
-**What this is:** **skycoin-education** is a public repository described as: “Education - Courses, certifications, learning #SkyCoin4444 #AI #Blockchain #DevOps #Innovation” Its dominant language signals are **TypeScript (8 files)**.
+**Status: engineering beta.** This repository does not claim to be an LMS, accredited school system, certification authority, deployed course platform, AI tutor, or production student-record service.
 
-**Why it has value:** Its value is best understood through the implementation evidence currently present in the repository: **27 tracked files** were observed in the shallow audit, with the source structure and existing documentation providing the project’s specific context. This README does not treat a prototype, experiment, or archive as a production system without supporting evidence.
+## Implemented behavior
 
-**Implementation evidence:** No test-related file was detected by filename heuristics.; 1 dependency or package manifest(s) detected; 3 build/CI/infrastructure signal(s) detected; and 3 documentation or governance file(s) detected. Test filenames observed include none detected. Dependency or package files include `package.json`. Build, CI, or infrastructure signals include `Dockerfile`, `docker-compose.yml`, `.github/workflows/ci.yml`.
+`gradeAssessment()` validates a bounded assessment definition and grades a submission deterministically. It supports weighted question points, configurable passing percentage, unanswered questions, per-question results, total/earned points, percentage, answered count, and correct count.
 
-**Current status:** The repository is tracked on the `main` branch. The existing source tree, configuration, tests, workflows, and documentation remain authoritative for supported behavior and maturity. A code audit is not a production-readiness certification, and the presence of a test or workflow file does not establish that all checks pass.
+```ts
+import { gradeAssessment } from "skycoin4444-assessment-core";
 
-**Relationship to the wider portfolio:** This repository is one focused component of the broader Skyler Blue Spillers portfolio across AI, software engineering, cloud and DevOps, cybersecurity, blockchain, finance, education, social systems, and creative work. It may provide a service boundary, implementation pattern, experiment, archive, or reusable idea for related repositories. Treat repositories as technical dependencies only where documented interfaces and verified project requirements support that relationship.
+const result = gradeAssessment(
+  {
+    passingPercent: 70,
+    questions: [
+      { id: "q1", correctAnswer: "A", points: 2 },
+      { id: "q2", correctAnswer: "B", points: 3 },
+    ],
+  },
+  { answers: { q1: "A", q2: "B" } },
+);
+```
 
-**Quality and security note:** No obvious secret-like pattern was detected by the limited static scan; this is not a substitute for a security audit. No TODO/FIXME marker was detected in the scanned text files.
+Validation rejects empty/oversized assessments, duplicate question IDs, invalid point values, invalid pass thresholds, unknown submitted question IDs, and oversized answers.
 
----
+## Verification
 
-# Skycoin Education
+```bash
+pnpm install
+pnpm typecheck
+pnpm test
+pnpm audit --audit-level=high
+pnpm pack
+```
 
-![GitHub stars](https://img.shields.io/github/stars/skylerblue333/skycoin-education?style=flat-square)
-![GitHub license](https://img.shields.io/github/license/skylerblue333/skycoin-education?style=flat-square)
+GitHub Actions runs real typecheck, tests, dependency audit, and package-smoke verification on Node.js 22. Previous scripts that only echoed successful build/test/lint messages were removed.
 
-## 🌟 Overview
-**skycoin-education** is a professional-grade project within the **SkyCoin4444** ecosystem. It focuses on delivering high-value solutions in the domain of **TypeScript**.
+There is intentionally no Docker or database deployment surface: the current product is a reusable library, not a web application.
 
-## 🚀 Key Features
-- **Scalable Architecture**: Designed for enterprise-level growth and performance.
-- **Modern Standards**: Implements best practices for clean code and maintainability.
-- **Robust Integration**: Built to work seamlessly within modern cloud-native environments.
+## Scope and limitations
 
-## 🛠️ Technology Stack
-- **Primary Domain**: TypeScript
-- **Ecosystem**: SkyCoin4444 Digital Platform
+Scoring currently uses exact string answer equality. It does not implement question banks, randomized tests, partial credit, essay grading, identity/proctoring, accommodations, course enrollment, student records, certificates, credential signing, persistence, analytics, privacy workflows, or regulatory compliance.
 
-## 📂 Structure
-The project is organized into a modular structure to ensure clarity and ease of development.
+Historical AI/security experiment files remain in the repository for history but are excluded from the supported package build.
 
-## 👨‍💻 Author
-**Skyler Blue Spillers**
-*Professional Chess Player & Software Engineer*
+For SkySchool or other SKYCOIN4444 education applications, consume this package through a stable assessment adapter and keep student identity, persistence, permissions, certification, and privacy controls in their appropriate service boundaries.
 
----
-*Powered by SkyCoin4444*
+## License
+
+MIT, subject to the checked-in license and applicable third-party licenses.
