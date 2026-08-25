@@ -1,21 +1,21 @@
 {
   "name": "skycoin4444-assessment-core",
   "version": "1.0.0-beta.1",
-  "description": "Deterministic assessment scoring primitives for educational integrations",
+  "description": "Deterministic assessment scoring and credential-record primitives for educational integrations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "README.md", "SECURITY.md", "LICENSE"],
+  "files": ["dist", "README.md", "SECURITY.md", "SKYCREDENTIALS.md", "LICENSE"],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
-    "test": "pnpm run build && node tests/assessment.test.js",
+    "test": "pnpm run build && node tests/assessment.test.js && node tests/credentials.test.js",
     "audit": "pnpm audit --audit-level=high",
     "prepack": "pnpm run build"
   },
   "engines": { "node": ">=20" },
   "packageManager": "pnpm@10.15.1",
-  "keywords": ["skycoin4444", "education", "assessment", "grading"],
+  "keywords": ["skycoin4444", "education", "assessment", "grading", "credentials"],
   "author": "SKYCOIN4444",
   "license": "MIT",
   "devDependencies": { "typescript": "^5.9.3" }
