@@ -6,3 +6,10 @@ export {
   type QuestionResult,
   type Submission,
 } from "./assessment/core";
+
+export {
+  CredentialRegistry,
+  type CredentialEvidence,
+  type CredentialInput,
+  type CredentialRecord,
+} from "./credentials/core";
